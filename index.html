@@ -338,7 +338,7 @@
 
 <header>
   <div class="header-eyebrow">Case study</div>
-  <h1>The job search operating system</h1>
+  <h1>The Job Search Operating System</h1>
   <div class="header-meta">
     <span class="header-author">Jeff Eddings</span>
     <div class="header-links">
@@ -867,7 +867,7 @@ const nodeContent = {
     },
     "companies-sheet": {
       title: "Companies sheet",
-      body: `<p>The Companies sheet was the master list of every company that might be worth targeting. Each company was assigned to a tier: <strong>Target</strong> (strongest fit), <strong>Validate</strong> (worth checking), <strong>Back Burner</strong> (lower priority), or <strong>No Fit</strong> (ruled out).</p><p>The key column was the <strong>priority score</strong>, a formula that determined in what order career pages should be checked. Inputs included: public company status, tier, comp confidence, pace rating (how often they post new roles), whether the last check had open roles, whether applicable roles had been found before, whether there were LinkedIn connections at the company, when the last check was, and a streak multiplier for consecutive dry checks.</p><p>The formula meant you never had to decide "should I check this company today." The sheet decided for you.</p>`
+      body: `<p>The Companies sheet was the master list of every company that might be worth targeting. Each company was assigned to a tier: <strong>Target</strong> (strongest fit), <strong>Validate</strong> (worth checking), <strong>Back Burner</strong> (lower priority), or <strong>No Fit</strong> (ruled out).</p><p>The key column was the <strong>priority score</strong>, a formula that determined in what order career pages should be checked. Inputs included: public company status, tier, comp confidence, pace rating (sustainability and pressure of work pace), whether the last check had open roles, whether applicable roles had been found before, whether there were LinkedIn connections at the company, when the last check was, and a streak multiplier for consecutive dry checks.</p><p>The formula meant you never had to decide "should I check this company today." The sheet decided for you.</p>`
     },
     "pick-next": {
       title: "📋 Pick next company",
@@ -899,7 +899,7 @@ const nodeContent = {
     },
     "connections": {
       title: "Check Connections tab",
-      body: `<p>The Connections tab held an exported list of LinkedIn connections mapped to their current companies. Before applying cold, the tab was checked for anyone with a meaningful relationship at the target company.</p><p>A connection changed the calculus in two ways: it might unlock a warm referral that bypassed the ATS, and it changed the outreach decision from "would this be awkward" to "is this connection strong enough to reach out."</p><p>The tab was a simple export — name, company, title — but having it in the same spreadsheet as everything else meant the check happened naturally as part of the flow rather than requiring a separate LinkedIn search.</p>`
+      body: `<p>The Connections tab held an exported list of LinkedIn connections mapped to their current companies. Before applying cold, the tab was checked for anyone with a meaningful relationship at the target company.</p><p>A connection changed the calculus in two ways: it might unlock a warm referral that bypassed the ATS, and it changed the outreach decision from "would this be awkward" to "is this connection strong enough to reach out."</p><p>The tab was a simple export from LinkedIn but having it in the same spreadsheet as everything else meant the check happened naturally as part of the flow rather than requiring a separate LinkedIn search.</p>`
     },
     "strong-connection": {
       title: "Strong connection?",
@@ -907,7 +907,7 @@ const nodeContent = {
     },
     "outreach": {
       title: "Reach out via LinkedIn",
-      body: `<p>Outreach messages followed a simple pattern: open with the name, acknowledge the connection briefly, get to the point immediately. Single clear ask. Close with "Thanks, Jeff." Short sentences. No corporate language. Sounded like it was dashed off in 30 seconds — because sincerity reads better than polish at this stage.</p><p>The message never led with the role. It led with the relationship and the ask was always "can we find 15 minutes to catch up" or "would you be willing to send my name to the recruiting team." Asking for a referral directly on the first message worked less well than just asking for a conversation.</p><p>After sending, the Stage Log was updated to 📬 Outreach Sent. From that point the pipeline was identical to the Applied path — the role entered the same waiting state and moved through the same stages.</p>`
+      body: `<p>Outreach messages followed a simple pattern: open with the name, acknowledge the connection briefly, get to the point immediately. Single clear ask. Close with "Thanks, Jeff." Short sentences. No corporate language. Sounded like it was dashed off in 30 seconds — because sincerity reads better than polish at this stage.</p><p>The message never led with the role. It led with the relationship and the ask was always "can we find 15 minutes to catch up" or "would you be willing to send my name to the recruiting team." Asking for a referral directly on the first message worked less well than just asking for a conversation.</p><p>After sending, 📬 Outreach Sent was added to the Stage Log. From that point the pipeline was identical to the Applied path — the role entered the same waiting state and moved through the same stages.</p>`
     },
     "apply": {
       title: "Apply on careers site",
@@ -915,7 +915,7 @@ const nodeContent = {
     },
     "applied-log": {
       title: "✅ Applied — log check-in",
-      body: `<p>After applying, two things were logged: the Stage Log was updated to ✅ Applied with the date, and the Check-In Log got a new entry marking this as a check where an applicable role was found and an application was submitted.</p><p>The Stage Log was the longitudinal record of every role's pipeline history. Each stage change — Applied, Recruiter Screen, HM Screen, etc. — became a new entry with date, company, role title, and the assessment scores from the Roles tab. This made it possible to see the full history of any role at a glance, and to analyze patterns across the search.</p>`
+      body: `<p>After applying, two things were logged: ✅ Applied was added to the Stage Log with the date, and the Check-In Log got a new entry marking this as a check where an applicable role was found and an application was submitted.</p><p>The Stage Log was the longitudinal record of every role's pipeline history. Each stage change — Applied, Recruiter Screen, HM Screen, etc. — became a new entry with date, company, role title, and the assessment scores from the Roles tab. This made it possible to see the full history of any role at a glance, and to analyze patterns across the search.</p>`
     },
     "response": {
       title: "Response received?",
@@ -931,7 +931,7 @@ const nodeContent = {
     },
     "take-home": {
       title: "📝 Take-Home Assignment",
-      body: `<p>Take-home assignments appeared at several points in the search, typically between the HM screen and the loop interview. They ranged from strategy documents and product teardowns to technical design exercises and case studies.</p><p>The company notes subtab held all take-home materials: the prompt, the submitted work, and notes on the approach. Claude was used for structure and thinking partnership on complex take-homes — not to write the answer, but to pressure-test the logic and sharpen the narrative before submitting.</p><p>The key discipline: take-homes are a signal about how you work, not just what you know. Clear structure, explicit tradeoffs, and a defensible recommendation mattered more than comprehensive coverage.</p>`
+      body: `<p>Take-home assignments appeared at several points in the search, typically between the HM screen and the loop interview. They ranged from strategy documents and product teardowns to technical design exercises and case studies.</p><p>The company notes subtab held all take-home materials: the prompt, the submitted work, and notes on the approach. Claude was used where AI use was not specifically prohibited for structure and thinking partnership on complex take-homes — not to write the answer, but to pressure-test the logic and sharpen the narrative before submitting.</p><p>The key discipline: take-homes are a signal about how you work, not just what you know. Clear structure, explicit tradeoffs, and a defensible recommendation mattered more than comprehensive coverage.</p>`
     },
     "loop-interview": {
       title: "➰ Loop Interview",

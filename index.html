@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Job Search Operating System — Jeff Eddings</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff;
+    --bg-secondary: #f8f8f7;
+    --bg-tertiary: #f2f0ea;
+    --border: #e0dfd8;
+    --border-mid: #c8c6be;
+    --text: #1a1a18;
+    --text-secondary: #5f5e5a;
+    --text-tertiary: #888780;
+    --teal-fill: #e1f5ee;
+    --teal-border: #0f6e56;
+    --teal-text: #085041;
+    --amber-fill: #faeeda;
+    --amber-border: #854f0b;
+    --amber-text: #633806;
+    --purple-fill: #eeedfe;
+    --purple-border: #534ab7;
+    --purple-text: #3c3489;
+    --coral-fill: #faece7;
+    --coral-border: #993c1d;
+    --coral-text: #712b13;
+    --gray-fill: #f1efe8;
+    --gray-border: #888780;
+    --gray-text: #444441;
+    --accent: #1d9e75;
+    --modal-max-width: 560px;
+    --nav-height: 56px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    padding: 2.5rem 2rem 2rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .header-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  header h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+  }
+  .header-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .header-author {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+  .header-links {
+    display: flex;
+    gap: 1rem;
+  }
+  .header-links a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-bottom: 0.5px solid var(--border-mid);
+    padding-bottom: 1px;
+    transition: color 0.15s;
+  }
+  .header-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .nav-inner a {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0 1rem;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .nav-inner a:hover { color: var(--text); }
+  .nav-inner a.active { color: var(--text); border-bottom-color: var(--accent); }
+
+  /* ── MAIN LAYOUT ── */
+  .page-body {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+
+  /* ── INTRO ── */
+  .intro {
+    padding: 2.5rem 0 2rem;
+    max-width: 640px;
+  }
+  .intro p {
+    font-size: 15px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+  .intro p:last-child { margin-bottom: 0; }
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding: 1.5rem 0 0;
+  }
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .stat-number {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 3rem 0 0;
+    border-top: 0.5px solid var(--border);
+    margin-top: 3rem;
+  }
+  .section:first-of-type { margin-top: 0; border-top: none; }
+  .section-header {
+    margin-bottom: 1.25rem;
+  }
+  .section-header h2 {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .section-header p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* ── DIAGRAM + SIDEBAR LAYOUT ── */
+  .diagram-area {
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .diagram-scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 1.5rem;
+  }
+  .diagram-scroll svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-overlay.open {
+    display: flex;
+  }
+  .modal {
+    background: var(--bg);
+    border: 0.5px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    width: 100%;
+    max-width: var(--modal-max-width);
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+  .modal-header {
+    padding: 1rem 1.25rem 0.75rem;
+    border-bottom: 0.5px solid var(--border);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+  .modal-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .modal-close {
+    background: none;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-tertiary);
+    flex-shrink: 0;
+    font-size: 14px;
+    line-height: 1;
+    transition: background 0.1s;
+  }
+  .modal-close:hover { background: var(--bg-secondary); color: var(--text); }
+  .modal-body {
+    padding: 1rem 1.25rem 1.25rem;
+    overflow-y: auto;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+  }
+  .modal-body p { margin-bottom: 0.75rem; }
+  .modal-body p:last-child { margin-bottom: 0; }
+  .modal-body ul {
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+  .modal-body ul li { margin-bottom: 0.25rem; }
+  .modal-body strong { color: var(--text); font-weight: 500; }
+
+  /* ── NODE STYLES IN SVG ── */
+  .diagram-scroll svg .clickable-node {
+    cursor: pointer;
+  }
+  .diagram-scroll svg .clickable-node:hover rect,
+  .diagram-scroll svg .clickable-node:hover .node-bg {
+    filter: brightness(0.96);
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-secondary);
+    border-bottom: 0.5px solid var(--border);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 0.5px solid;
+    flex-shrink: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 0.5px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-tertiary);
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  footer a { color: var(--text-tertiary); text-decoration: none; }
+  footer a:hover { color: var(--accent); }
+
+  @media (max-width: 700px) {
+    header { padding: 1.5rem 1rem 1rem; }
+    .page-body { padding: 0 1rem 3rem; }
+    .nav-inner { padding: 0 1rem; }
+    header h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-eyebrow">Case study</div>
+  <h1>The job search operating system</h1>
+  <div class="header-meta">
+    <span class="header-author">Jeff Eddings</span>
+    <div class="header-links">
+      <a href="https://www.linkedin.com/in/jeffeddings" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/jeddings" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#process-flow" class="active">Process flow</a>
+    <a href="#interview-prep">Interview prep</a>
+  </div>
+</nav>
+
+<div class="page-body">
+
+  <div class="intro">
+    <p>In early 2026 I was laid off after six years at a large tech company. What followed was a five-month job search that assessed 471 roles, generated 675 career page check-ins, and produced three simultaneous offers. It also produced a system.</p>
+    <p>The search didn't start with job boards. The normal instinct is to collect a set of keyword searches — "staff technical program manager," "platform product manager" — and check whether anything new has appeared. That approach has two problems. First, it's imprecise: the same keyword returns roles that are genuinely relevant alongside roles that merely contain the words. Second, it's incomplete: many of the best companies, especially mid-size and growth-stage ones, don't syndicate their postings reliably to job boards. A role might sit on a company's careers page for two weeks before appearing anywhere else.</p>
+    <p>The alternative was to think like a product manager about the search itself. Given a specific experience profile, a finite list of companies likely to have relevant roles at any given time could be reasoned out. That list became the Companies sheet. Instead of waiting for job boards to surface opportunities, the search went directly to the source: check each company's careers page on a rotating schedule, prioritized by how likely they were to have something worth applying to. Two additional advantages emerged: applying within the first day or two of a posting going live matters at Staff+ level because the pipeline is smaller and hiring managers often review the first wave before the queue grows; and building the Companies sheet forced an explicit decision about which companies were worth targeting and why, which fed everything downstream — resume tailoring, story selection, comp expectations. The result was faster signal, better coverage, and a system that got smarter over time.</p>
+    <p>As the complexity grew, infrastructure was built to absorb it — a structured evaluation framework, a canonical resume, a story library, a company priority queue. By the end, the system was mature enough to just show up and do the work. These diagrams document how it worked.</p>
+    <p>Click any node for a full explanation. Every box is a real step in the process.</p>
+    <div class="stat-row">
+      <div class="stat"><span class="stat-number">471</span><span class="stat-label">roles assessed</span></div>
+      <div class="stat"><span class="stat-number">176</span><span class="stat-label">roles applied</span></div>
+      <div class="stat"><span class="stat-number">675</span><span class="stat-label">career page check-ins</span></div>
+      <div class="stat"><span class="stat-number">3</span><span class="stat-label">offers received</span></div>
+      <div class="stat"><span class="stat-number">~5mo</span><span class="stat-label">layoff to accepted</span></div>
+    </div>
+  </div>
+
+  <!-- ── PROCESS FLOW ── -->
+  <div class="section" id="process-flow">
+    <div class="section-header">
+      <h2>Process flow</h2>
+      <p>The daily execution loop — from the Companies sheet through career page checks, JD evaluation, application or outreach, and all post-application stages through to offer or terminal states.</p>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:#e1f5ee;border-color:#0f6e56;"></div> Tracker action</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#faeeda;border-color:#854f0b;"></div> Decision</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#eeedfe;border-color:#534ab7;"></div> Claude-assisted</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#faece7;border-color:#993c1d;"></div> Interview stage</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#f1efe8;border-color:#888780;"></div> Log / terminal</div>
+    </div>
+
+    <div class="diagram-area">
+      <div class="diagram-scroll" id="pf-scroll">
+        <svg viewBox="0 0 560 2020" xmlns="http://www.w3.org/2000/svg" id="pf-svg">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+
+          <!-- START -->
+          <g class="clickable-node" data-node="start" onclick="showNode('pf','start')">
+            <rect x="170" y="20" width="200" height="40" rx="20" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+            <text x="270" y="40" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#444441">Start daily loop</text>
+          </g>
+          <line x1="270" y1="60" x2="270" y2="84" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- COMPANIES SHEET -->
+          <g class="clickable-node" data-node="companies-sheet" onclick="showNode('pf','companies-sheet')">
+            <rect x="140" y="84" width="260" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="104" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">Companies sheet</text>
+            <text x="270" y="122" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Sort by priority score</text>
+          </g>
+          <line x1="270" y1="136" x2="270" y2="160" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- PICK NEXT COMPANY -->
+          <g class="clickable-node" data-node="pick-next" onclick="showNode('pf','pick-next')">
+            <rect x="140" y="160" width="260" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="180" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">📋 Pick next company</text>
+            <text x="270" y="198" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Highest priority unchecked</text>
+          </g>
+          <line x1="270" y1="212" x2="270" y2="236" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- VISIT CAREERS PAGE -->
+          <g class="clickable-node" data-node="visit-careers" onclick="showNode('pf','visit-careers')">
+            <rect x="140" y="236" width="260" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="256" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">Visit careers page</text>
+            <text x="270" y="274" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Click URL from Companies tab</text>
+          </g>
+          <line x1="270" y1="288" x2="270" y2="312" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- RELEVANT ROLES? -->
+          <g class="clickable-node" data-node="relevant-roles" onclick="showNode('pf','relevant-roles')">
+            <rect x="130" y="312" width="280" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="332" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Relevant roles found?</text>
+            <text x="270" y="350" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Skim titles and descriptions</text>
+          </g>
+          <!-- No branch loop back -->
+          <path d="M130 338 L60 338 L60 186 L140 186" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+          <text x="36" y="328" text-anchor="middle" font-size="11" fill="#888780">No ·</text>
+          <text x="36" y="342" text-anchor="middle" font-size="11" fill="#888780">log</text>
+          <text x="36" y="356" text-anchor="middle" font-size="11" fill="#888780">check-in</text>
+          <!-- Yes -->
+          <line x1="270" y1="364" x2="270" y2="388" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="284" y="378" font-size="11" fill="#888780">Yes</text>
+
+          <!-- PASTE JD INTO CLAUDE -->
+          <g class="clickable-node" data-node="paste-jd" onclick="showNode('pf','paste-jd')">
+            <rect x="130" y="388" width="280" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="408" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Paste JD into Claude</text>
+            <text x="270" y="426" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Generate gut check table</text>
+          </g>
+          <line x1="270" y1="440" x2="270" y2="464" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- ADD TO ROLES TAB -->
+          <g class="clickable-node" data-node="roles-tab" onclick="showNode('pf','roles-tab')">
+            <rect x="140" y="464" width="260" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="484" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">Add row to Roles tab</text>
+            <text x="270" y="502" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Paste scored row · log check-in</text>
+          </g>
+          <line x1="270" y1="516" x2="270" y2="540" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- WORTH PURSUING? -->
+          <g class="clickable-node" data-node="worth-pursuing" onclick="showNode('pf','worth-pursuing')">
+            <rect x="130" y="540" width="280" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="560" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Worth pursuing?</text>
+            <text x="270" y="578" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Review Target + Runway scores</text>
+          </g>
+          <!-- Not Pursuing -->
+          <path d="M130 566 L80 566 L80 186 L140 186" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+          <text x="56" y="556" text-anchor="middle" font-size="11" fill="#888780">No</text>
+          <rect x="10" y="548" width="90" height="36" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="55" y="566" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">🛑 Not Pursuing</text>
+          <!-- Yes -->
+          <line x1="270" y1="592" x2="270" y2="616" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="284" y="606" font-size="11" fill="#888780">Yes</text>
+
+          <!-- GENERATE TAILORED RESUME -->
+          <g class="clickable-node" data-node="tailored-resume" onclick="showNode('pf','tailored-resume')">
+            <rect x="120" y="616" width="300" height="52" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+            <text x="270" y="636" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#3c3489">Generate tailored resume</text>
+            <text x="270" y="654" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">Claude from canonical source</text>
+          </g>
+          <line x1="270" y1="668" x2="270" y2="692" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- CHECK CONNECTIONS -->
+          <g class="clickable-node" data-node="connections" onclick="showNode('pf','connections')">
+            <rect x="130" y="692" width="280" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="712" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">Check Connections tab</text>
+            <text x="270" y="730" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Any strong LinkedIn connections?</text>
+          </g>
+          <line x1="270" y1="744" x2="270" y2="768" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- STRONG CONNECTION? -->
+          <g class="clickable-node" data-node="strong-connection" onclick="showNode('pf','strong-connection')">
+            <rect x="130" y="768" width="280" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="788" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Strong connection?</text>
+            <text x="270" y="806" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Worth reaching out first?</text>
+          </g>
+          <!-- Yes → outreach right -->
+          <line x1="410" y1="794" x2="454" y2="794" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="430" y="784" font-size="11" fill="#888780">Yes</text>
+          <g class="clickable-node" data-node="outreach" onclick="showNode('pf','outreach')">
+            <rect x="454" y="770" width="100" height="52" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+            <text x="504" y="790" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#3c3489">Reach out</text>
+            <text x="504" y="808" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">via LinkedIn</text>
+          </g>
+          <line x1="504" y1="822" x2="504" y2="850" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <rect x="450" y="850" width="108" height="36" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="504" y="868" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">📬 Outreach Sent</text>
+          <path d="M504 886 L504 930 L410 930" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+          <!-- No → apply -->
+          <line x1="270" y1="820" x2="270" y2="854" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="284" y="838" font-size="11" fill="#888780">No</text>
+
+          <!-- APPLY -->
+          <g class="clickable-node" data-node="apply" onclick="showNode('pf','apply')">
+            <rect x="140" y="854" width="260" height="52" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+            <text x="270" y="874" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#3c3489">Apply on careers site</text>
+            <text x="270" y="892" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">Submit tailored resume</text>
+          </g>
+          <line x1="270" y1="906" x2="270" y2="930" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- APPLIED LOG -->
+          <g class="clickable-node" data-node="applied-log" onclick="showNode('pf','applied-log')">
+            <rect x="140" y="930" width="260" height="36" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+            <text x="270" y="948" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#444441">✅ Applied · log check-in</text>
+          </g>
+          <line x1="270" y1="966" x2="270" y2="990" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- RESPONSE? -->
+          <g class="clickable-node" data-node="response" onclick="showNode('pf','response')">
+            <rect x="120" y="990" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="1010" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Response received?</text>
+            <text x="270" y="1028" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Continue checking other companies</text>
+          </g>
+          <!-- Terminal left -->
+          <path d="M120 1016 L60 1016" fill="none" stroke="#888780" stroke-width="1" opacity="0.6"/>
+          <text x="34" y="1006" text-anchor="middle" font-size="11" fill="#888780">No /</text>
+          <text x="34" y="1020" text-anchor="middle" font-size="11" fill="#888780">terminal</text>
+          <rect x="6" y="1036" width="108" height="34" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="60" y="1053" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">🚪 Not Selected</text>
+          <rect x="6" y="1080" width="108" height="34" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="60" y="1097" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">📴 Role N/A</text>
+          <rect x="6" y="1124" width="108" height="34" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="60" y="1141" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">⏳ On Hold</text>
+          <line x1="60" y1="1016" x2="60" y2="1036" stroke="#888780" stroke-width="0.5" opacity="0.5"/>
+          <line x1="60" y1="1070" x2="60" y2="1080" stroke="#888780" stroke-width="0.5" opacity="0.5"/>
+          <line x1="60" y1="1114" x2="60" y2="1124" stroke="#888780" stroke-width="0.5" opacity="0.5"/>
+          <path d="M114 1141 L150 1141 L150 186 L140 186" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)" opacity="0.4"/>
+          <!-- Yes -->
+          <line x1="270" y1="1042" x2="270" y2="1076" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="284" y="1060" font-size="11" fill="#888780">Yes</text>
+
+          <!-- RECRUITER SCREEN -->
+          <g class="clickable-node" data-node="recruiter-screen" onclick="showNode('pf','recruiter-screen')">
+            <rect x="140" y="1076" width="260" height="36" rx="6" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+            <text x="270" y="1094" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#712b13">📞 Recruiter Screen</text>
+          </g>
+          <line x1="270" y1="1112" x2="270" y2="1136" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- HM SCREEN -->
+          <g class="clickable-node" data-node="hm-screen" onclick="showNode('pf','hm-screen')">
+            <rect x="140" y="1136" width="260" height="36" rx="6" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+            <text x="270" y="1154" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#712b13">👍 Hiring Mgr Screen</text>
+          </g>
+          <line x1="270" y1="1172" x2="270" y2="1196" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- TAKE-HOME? -->
+          <g class="clickable-node" data-node="take-home" onclick="showNode('pf','take-home')">
+            <rect x="120" y="1196" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="1216" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Take-home assigned?</text>
+            <text x="270" y="1234" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Some roles skip this</text>
+          </g>
+          <line x1="420" y1="1222" x2="454" y2="1222" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="435" y="1212" font-size="11" fill="#888780">Yes</text>
+          <rect x="454" y="1204" width="100" height="36" rx="6" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+          <text x="504" y="1222" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#712b13">📝 Take-Home</text>
+          <path d="M504 1240 L504 1282 L420 1282" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+          <line x1="270" y1="1248" x2="270" y2="1272" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="284" y="1262" font-size="11" fill="#888780">No</text>
+
+          <!-- LOOP INTERVIEW -->
+          <g class="clickable-node" data-node="loop-interview" onclick="showNode('pf','loop-interview')">
+            <rect x="140" y="1272" width="260" height="36" rx="6" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+            <text x="270" y="1290" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#712b13">➰ Loop Interview</text>
+          </g>
+          <line x1="270" y1="1308" x2="270" y2="1332" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- PANEL? -->
+          <g class="clickable-node" data-node="panel" onclick="showNode('pf','panel')">
+            <rect x="120" y="1332" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="1352" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Panel interview?</text>
+            <text x="270" y="1370" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Some roles include panel</text>
+          </g>
+          <line x1="420" y1="1358" x2="454" y2="1358" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="435" y="1348" font-size="11" fill="#888780">Yes</text>
+          <rect x="454" y="1340" width="100" height="36" rx="6" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+          <text x="504" y="1358" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#712b13">👥 Panel</text>
+          <path d="M504 1376 L504 1416 L420 1416" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+          <line x1="270" y1="1384" x2="270" y2="1408" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="284" y="1398" font-size="11" fill="#888780">No</text>
+
+          <!-- FINAL ROUND -->
+          <g class="clickable-node" data-node="final-round" onclick="showNode('pf','final-round')">
+            <rect x="140" y="1408" width="260" height="36" rx="6" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+            <text x="270" y="1426" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#712b13">🔚 Final Round</text>
+          </g>
+          <line x1="270" y1="1444" x2="270" y2="1468" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- OFFER? -->
+          <g class="clickable-node" data-node="offer-decision" onclick="showNode('pf','offer-decision')">
+            <rect x="120" y="1468" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="1488" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Offer received?</text>
+            <text x="270" y="1506" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Evaluate with decision matrix</text>
+          </g>
+          <path d="M120 1494 L80 1494 L80 1560" fill="none" stroke="#888780" stroke-width="1" opacity="0.5"/>
+          <rect x="20" y="1560" width="120" height="34" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="80" y="1577" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">🚪 Not Selected</text>
+          <text x="68" y="1486" font-size="11" fill="#888780">No</text>
+          <line x1="270" y1="1520" x2="270" y2="1554" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="284" y="1538" font-size="11" fill="#888780">Yes</text>
+
+          <!-- OFFER -->
+          <g class="clickable-node" data-node="offer" onclick="showNode('pf','offer')">
+            <rect x="140" y="1554" width="260" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="1574" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">💰 Offer</text>
+            <text x="270" y="1592" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Run decision matrix</text>
+          </g>
+          <line x1="270" y1="1606" x2="270" y2="1630" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+
+          <!-- ACCEPT? -->
+          <g class="clickable-node" data-node="accept" onclick="showNode('pf','accept')">
+            <rect x="120" y="1630" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="1650" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Accept?</text>
+            <text x="270" y="1668" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Target score · comp · gut</text>
+          </g>
+          <path d="M120 1656 L80 1656 L80 186 L140 186" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr)" opacity="0.35"/>
+          <text x="58" y="1648" font-size="11" fill="#888780">No</text>
+          <line x1="270" y1="1682" x2="270" y2="1716" stroke="#888780" stroke-width="1" marker-end="url(#arr)"/>
+          <text x="284" y="1700" font-size="11" fill="#888780">Yes</text>
+
+          <!-- ACCEPTED -->
+          <g class="clickable-node" data-node="accepted" onclick="showNode('pf','accepted')">
+            <rect x="140" y="1716" width="260" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="1736" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">🏁 Accepted</text>
+            <text x="270" y="1754" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Log to Stage Log · done</text>
+          </g>
+
+          <!-- interview prep side note -->
+          <rect x="2" y="1076" width="2" height="696" fill="#888780" opacity="0.15"/>
+          <text x="10" y="1424" text-anchor="middle" font-size="10" fill="#888780" transform="rotate(-90,10,1424)">interview prep runs in parallel — see below</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── INTERVIEW PREP ── -->
+  <div class="section" id="interview-prep">
+    <div class="section-header">
+      <h2>Interview prep</h2>
+      <p>A separate loop triggered when a stage is scheduled. Covers research, gap assessment, domain learning, story selection, mock interviews, and the post-interview debrief that compounds prep quality each round.</p>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:#e1f5ee;border-color:#0f6e56;"></div> Tracker action</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#faeeda;border-color:#854f0b;"></div> Decision</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#eeedfe;border-color:#534ab7;"></div> Claude-assisted</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#faece7;border-color:#993c1d;"></div> Interview stage</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:#f1efe8;border-color:#888780;"></div> Log / terminal</div>
+    </div>
+
+    <div class="diagram-area">
+      <div class="diagram-scroll" id="ip-scroll">
+        <svg viewBox="0 0 560 1480" xmlns="http://www.w3.org/2000/svg" id="ip-svg">
+          <defs>
+            <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+
+          <!-- TRIGGER -->
+          <g class="clickable-node" data-node="trigger" onclick="showNode('ip','trigger')">
+            <rect x="140" y="20" width="260" height="52" rx="8" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+            <text x="270" y="40" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#712b13">Stage scheduled</text>
+            <text x="270" y="58" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993c1d">📞 👍 ➰ 👥 🔚</text>
+          </g>
+          <line x1="270" y1="72" x2="270" y2="96" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- LOAD CONTEXT -->
+          <g class="clickable-node" data-node="load-context" onclick="showNode('ip','load-context')">
+            <rect x="130" y="96" width="280" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="116" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">Load role context</text>
+            <text x="270" y="134" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Gut check row · company notes tab</text>
+          </g>
+          <line x1="270" y1="148" x2="270" y2="172" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- RESEARCH -->
+          <g class="clickable-node" data-node="research" onclick="showNode('ip','research')">
+            <rect x="120" y="172" width="300" height="52" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+            <text x="270" y="192" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#3c3489">Research with Claude</text>
+            <text x="270" y="210" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">Company · team · interviewer background</text>
+          </g>
+          <line x1="270" y1="224" x2="270" y2="248" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- CREDENTIAL GAP? -->
+          <g class="clickable-node" data-node="credential-gap" onclick="showNode('ip','credential-gap')">
+            <rect x="120" y="248" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="268" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Credential gap?</text>
+            <text x="270" y="286" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Domain knowledge I don't yet have</text>
+          </g>
+          <!-- Yes → domain learning right -->
+          <line x1="420" y1="274" x2="454" y2="274" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+          <text x="435" y="264" font-size="11" fill="#888780">Yes</text>
+          <g class="clickable-node" data-node="domain-learning" onclick="showNode('ip','domain-learning')">
+            <rect x="454" y="224" width="100" height="52" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+            <text x="504" y="244" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#3c3489">Domain</text>
+            <text x="504" y="260" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">learning</text>
+          </g>
+          <rect x="454" y="284" width="100" height="52" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="504" y="304" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">Concepts</text>
+          <text x="504" y="320" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">Hands-on</text>
+          <path d="M504 336 L504 370 L420 370" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr2)"/>
+          <!-- No → straight down -->
+          <line x1="270" y1="300" x2="270" y2="362" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+          <text x="284" y="332" font-size="11" fill="#888780">No</text>
+
+          <!-- QUESTION BANK -->
+          <g class="clickable-node" data-node="question-bank" onclick="showNode('ip','question-bank')">
+            <rect x="120" y="362" width="300" height="68" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="384" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">Question bank</text>
+            <text x="270" y="402" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Prioritized by frequency · theme</text>
+            <text x="270" y="418" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">PM / TPM / Both · mapped to stories</text>
+          </g>
+          <line x1="270" y1="430" x2="270" y2="454" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- STORY SELECTION -->
+          <g class="clickable-node" data-node="story-selection" onclick="showNode('ip','story-selection')">
+            <rect x="120" y="454" width="300" height="68" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+            <text x="270" y="476" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#3c3489">Story selection with Claude</text>
+            <text x="270" y="494" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">Match questions to STRIRI mnemonics</text>
+            <text x="270" y="510" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">mapped to named story mnemonics</text>
+          </g>
+          <line x1="270" y1="522" x2="270" y2="546" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- TALKING POINTS -->
+          <g class="clickable-node" data-node="talking-points" onclick="showNode('ip','talking-points')">
+            <rect x="120" y="546" width="300" height="68" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+            <text x="270" y="568" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#3c3489">Develop talking points</text>
+            <text x="270" y="586" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">Sharpen stakes · alternatives · insight</text>
+            <text x="270" y="602" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">Stage-specific angle (HM vs loop)</text>
+          </g>
+          <line x1="270" y1="614" x2="270" y2="638" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- MOCK INTERVIEW -->
+          <g class="clickable-node" data-node="mock-interview" onclick="showNode('ip','mock-interview')">
+            <rect x="120" y="638" width="300" height="68" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+            <text x="270" y="660" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#3c3489">Mock interview with Claude</text>
+            <text x="270" y="678" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">Claude asks · Jeff answers</text>
+            <text x="270" y="694" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#534ab7">Feedback on gaps and delivery</text>
+          </g>
+          <line x1="270" y1="706" x2="270" y2="730" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- CONFIDENT? -->
+          <g class="clickable-node" data-node="confident" onclick="showNode('ip','confident')">
+            <rect x="120" y="730" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="750" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Confident enough?</text>
+            <text x="270" y="768" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Earned vs performed confidence</text>
+          </g>
+          <path d="M120 756 L80 756 L80 488 L120 488" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr2)"/>
+          <text x="58" y="748" font-size="11" fill="#888780">No</text>
+          <line x1="270" y1="782" x2="270" y2="806" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+          <text x="284" y="796" font-size="11" fill="#888780">Yes</text>
+
+          <!-- INTERVIEW -->
+          <g class="clickable-node" data-node="interview" onclick="showNode('ip','interview')">
+            <rect x="140" y="806" width="260" height="52" rx="8" fill="#faece7" stroke="#993c1d" stroke-width="0.5"/>
+            <text x="270" y="826" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#712b13">Interview</text>
+            <text x="270" y="844" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#993c1d">Execute with earned confidence</text>
+          </g>
+          <line x1="270" y1="858" x2="270" y2="882" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- DEBRIEF -->
+          <g class="clickable-node" data-node="debrief" onclick="showNode('ip','debrief')">
+            <rect x="120" y="882" width="300" height="68" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="904" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">Post-interview debrief</text>
+            <text x="270" y="922" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Capture questions asked</text>
+            <text x="270" y="938" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">Note what I answered · gaps</text>
+          </g>
+          <line x1="270" y1="950" x2="270" y2="974" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- UPDATE QUESTION BANK -->
+          <g class="clickable-node" data-node="update-qbank" onclick="showNode('ip','update-qbank')">
+            <rect x="120" y="974" width="300" height="52" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+            <text x="270" y="994" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#085041">Update question bank</text>
+            <text x="270" y="1012" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#0f6e56">New questions · refine story mappings</text>
+          </g>
+          <line x1="270" y1="1026" x2="270" y2="1050" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+
+          <!-- ADVANCING? -->
+          <g class="clickable-node" data-node="advancing" onclick="showNode('ip','advancing')">
+            <rect x="120" y="1050" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="1070" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Advancing to next stage?</text>
+            <text x="270" y="1088" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Next stage scheduled?</text>
+          </g>
+          <!-- Yes loops back -->
+          <path d="M420 1076 L480 1076 L480 46 L400 46" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arr2)" opacity="0.4"/>
+          <text x="450" y="560" font-size="10" fill="#888780" transform="rotate(-90,450,560)">next stage ↻</text>
+          <text x="436" y="1068" font-size="11" fill="#888780">Yes</text>
+          <!-- No down -->
+          <line x1="270" y1="1102" x2="270" y2="1136" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+          <text x="284" y="1120" font-size="11" fill="#888780">No</text>
+
+          <!-- OUTCOME -->
+          <g class="clickable-node" data-node="outcome" onclick="showNode('ip','outcome')">
+            <rect x="120" y="1136" width="300" height="52" rx="8" fill="#faeeda" stroke="#854f0b" stroke-width="0.5"/>
+            <text x="270" y="1156" text-anchor="middle" dominant-baseline="central" font-size="13" font-weight="500" fill="#633806">Outcome</text>
+            <text x="270" y="1174" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#854f0b">Return to main loop or close</text>
+          </g>
+          <path d="M120 1162 L60 1162 L60 1230" fill="none" stroke="#888780" stroke-width="1" opacity="0.5"/>
+          <rect x="6" y="1230" width="108" height="34" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="60" y="1247" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#444441">🚪 Not Selected</text>
+          <text x="46" y="1154" font-size="11" fill="#888780">No offer</text>
+          <path d="M420 1162 L480 1162 L480 1230" fill="none" stroke="#888780" stroke-width="1" opacity="0.5"/>
+          <rect x="430" y="1230" width="108" height="34" rx="6" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+          <text x="484" y="1247" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#085041">💰 Offer received</text>
+          <text x="462" y="1154" font-size="11" fill="#888780">Offer</text>
+          <path d="M60 1264 L60 1310 L160 1310" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+          <path d="M484 1264 L484 1310 L400 1310" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+          <rect x="160" y="1292" width="220" height="36" rx="6" fill="#f1efe8" stroke="#888780" stroke-width="0.5"/>
+          <text x="270" y="1310" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#444441">Return to main process flow</text>
+
+          <!-- compounds label -->
+          <rect x="2" y="882" width="2" height="144" fill="#888780" opacity="0.15"/>
+          <text x="10" y="954" text-anchor="middle" font-size="10" fill="#888780" transform="rotate(-90,10,954)">compounds each stage</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="handleOverlayClick(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">—</div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<footer>
+  <p>Built by <a href="https://www.linkedin.com/in/jeffeddings" target="_blank">Jeff Eddings</a> · <a href="https://github.com/jeddings" target="_blank">GitHub</a></p>
+</footer>
+
+<script>
+const nodeContent = {
+  pf: {
+    "start": {
+      title: "Start daily loop",
+      body: `<p>The daily loop was the heartbeat of the search. Every day the goal was simple: check the companies at the top of the priority queue, evaluate any relevant roles, and move things forward in the pipeline.</p><p>The loop didn't require willpower to start. The system told you exactly where to begin — open the Companies sheet, sort by priority score, and start at the top. The cognitive load of "what should I do today" was absorbed by the infrastructure.</p>`
+    },
+    "companies-sheet": {
+      title: "Companies sheet",
+      body: `<p>The Companies sheet was the master list of every company that might be worth targeting. Each company was assigned to a tier: <strong>Target</strong> (strongest fit), <strong>Validate</strong> (worth checking), <strong>Back Burner</strong> (lower priority), or <strong>No Fit</strong> (ruled out).</p><p>The key column was the <strong>priority score</strong>, a formula that determined in what order career pages should be checked. Inputs included: public company status, tier, comp confidence, pace rating (how often they post new roles), whether the last check had open roles, whether applicable roles had been found before, whether there were LinkedIn connections at the company, when the last check was, and a streak multiplier for consecutive dry checks.</p><p>The formula meant you never had to decide "should I check this company today." The sheet decided for you.</p>`
+    },
+    "pick-next": {
+      title: "📋 Pick next company",
+      body: `<p>Sort the Companies sheet by priority score and start at the top. The highest-scored company that hadn't been checked recently was always the right next move.</p><p>The priority formula punished companies with long dry streaks — if you'd checked a company ten times with no relevant roles, its score dropped, making room for fresher targets to rise. It also rewarded companies with LinkedIn connections, since a warm path always changes the calculus.</p><p>This step sounds trivial but it was one of the highest-leverage parts of the system. Without it, "what do I check today" becomes a daily judgment call that slowly drains energy. The formula converted that into a mechanical queue.</p>`
+    },
+    "visit-careers": {
+      title: "Visit careers page",
+      body: `<p>Each company in the sheet had a direct URL to its careers page or jobs listing. The check was fast: open the URL, scan for relevant titles, close the tab.</p><p>Over 675 check-ins, the pattern became automatic. Most checks took under two minutes. The value wasn't in any single check — it was in the compound effect of checking systematically over five months. Roles that weren't posted one week were posted the next. Being the first to apply to a fresh posting matters at Staff+ level where the pipeline is smaller.</p><p>Every check, regardless of outcome, was logged in the Check-In Log.</p>`
+    },
+    "relevant-roles": {
+      title: "Relevant roles found?",
+      body: `<p>The first filter was fast and loose: does this title and description suggest the role could be a fit? The bar at this stage was low. If there was any plausible match, it went to the gut check step. If not, the check-in was logged and the loop continued to the next company.</p><p>This is also where an honest reckoning happened about what "relevant" meant. Early in the search, the filter was too loose and generated too many gut checks that quickly became Not Pursuing. Over time, the criteria tightened based on what the scores kept saying: roles without genuine platform ownership, roles below Staff level, roles at companies with clear comp ceiling problems — these stopped passing the relevance filter before the gut check step.</p>`
+    },
+    "paste-jd": {
+      title: "Paste JD into Claude — generate gut check table",
+      body: `<p>This was the hinge step. The JD was pasted into Claude, which produced a structured 16-column assessment row ready to paste directly into the Roles tab of the tracker.</p><p>The gut check table columns: Company, Role Title, Role Type (PM/TPM/Other), Stage, Overall Fit & Recommendation, Target Score, Runway Score, HM Pass Odds, Level & Scope, Comp & Stability, Remote Reality, What/How/Why, Skills Match, Culture Signal, Hidden Risks, Misery Risk.</p><p><strong>Target Score</strong> (weighted 20% each): Overall Fit, Level & Scope, Culture Signal, Misery Risk (inverted), What/How/Why. Soft go threshold: ≥2.3.</p><p><strong>Runway Score</strong>: Skills Match 40%, Comp & Stability 30%, HM Pass Odds 20%, Hidden Risks 10%. Soft go threshold: ≥2.7.</p><p><strong>HM Pass Odds</strong>: estimated probability of passing a hiring manager interview if already in the room. Distinct from Skills Match — this is "can I sell myself into this role to this HM," not just "can I do the job."</p><p>One honest tension: once the gut check table was mature, the JD often got only a skim before handing it to Claude. This occasionally produced accurate scores but shallow understanding. The fix was doing just enough upfront reading to have a hypothesis the table could confirm or challenge — not full analysis, just enough context to catch something the table might miss.</p>`
+    },
+    "roles-tab": {
+      title: "Add row to Roles tab",
+      body: `<p>The gut check table output was a single formatted row, designed to paste directly into the Roles tab of the Google Sheet. The sheet held all 471 assessed roles, each as a row with the 16 columns from the gut check table.</p><p>The Roles tab was the source of truth for every evaluation decision. It answered questions like: "Did I look at this company before?" "What did I think of that role last month?" "Which companies have I applied to in the fintech space?" Having every assessment in one place, with consistent scoring, made retrospective analysis fast.</p><p>The Check-In Log was updated at the same time: date, company, whether open/applicable/new roles were found. This fed the priority formula for future checks.</p>`
+    },
+    "worth-pursuing": {
+      title: "Worth pursuing?",
+      body: `<p>After the gut check row was in the tracker, the decision was simple: does this role clear the thresholds? Runway Score ≥2.7 was the primary gate — if the skills match, comp, and HM pass odds weren't there, the role wasn't viable regardless of how interesting it seemed. Target Score ≥2.3 was the secondary filter for desirability.</p><p>In runway mode (active job search, finite timeline), the Misery Risk score was a flag, not a disqualifier. A role with high misery risk that cleared the runway threshold still moved forward. The system tracked it honestly rather than pretending the concern didn't exist.</p><p>Roles that didn't clear were logged as 🛑 Not Pursuing in the Stage Log and the loop continued. No agonizing, no second-guessing — the scores said no and the system moved on.</p>`
+    },
+    "tailored-resume": {
+      title: "Generate tailored resume",
+      body: `<p>The canonical resume was the single source of truth: a complete document containing every relevant bullet, all version summaries (e.g. PM, TPM, Hybrid), and skills sections tailored to each archetype.</p><p>For any given JD, Claude generated a tailored version by: selecting the right summary version, adjusting the skills section to mirror the JD's domain language, and choosing the bullet subset most relevant to the role's emphasis.</p><p>Hard constraints: two pages maximum, no exceptions. Each employer section had a target bullet count — enough to show depth without padding. The tailoring surfaces were summary version, skills section, and bullet selection — never starting from scratch. The canonical resume absorbed the cost of maintaining consistent language, formatting, and completeness. Tailoring from the canonical was fast. Starting from a blank doc was not.</p><p>Resumes were generated programmatically using a Node.js pipeline with the docx library, producing a formatted .docx in under a minute. The whole loop — JD in, resume out — typically took under 15 minutes once the system was mature.</p>`
+    },
+    "connections": {
+      title: "Check Connections tab",
+      body: `<p>The Connections tab held an exported list of LinkedIn connections mapped to their current companies. Before applying cold, the tab was checked for anyone with a meaningful relationship at the target company.</p><p>A connection changed the calculus in two ways: it might unlock a warm referral that bypassed the ATS, and it changed the outreach decision from "would this be awkward" to "is this connection strong enough to reach out."</p><p>The tab was a simple export — name, company, title — but having it in the same spreadsheet as everything else meant the check happened naturally as part of the flow rather than requiring a separate LinkedIn search.</p>`
+    },
+    "strong-connection": {
+      title: "Strong connection?",
+      body: `<p>Not all connections are equal. The question wasn't "do I know someone there" but "do I know someone there well enough that reaching out would be welcomed rather than awkward."</p><p>The bar: would this person take 15 minutes to talk to me? Would they feel comfortable forwarding my name to a recruiter or hiring manager? If yes, outreach. If the relationship was superficial, cold apply was usually cleaner than a forced reconnection.</p><p>When the connection was genuinely strong, outreach before applying almost always produced better outcomes: faster movement, warmer introductions, and occasionally direct access to the hiring manager that bypassed the standard recruiter screen.</p>`
+    },
+    "outreach": {
+      title: "Reach out via LinkedIn",
+      body: `<p>Outreach messages followed a simple pattern: open with the name, acknowledge the connection briefly, get to the point immediately. Single clear ask. Close with "Thanks, Jeff." Short sentences. No corporate language. Sounded like it was dashed off in 30 seconds — because sincerity reads better than polish at this stage.</p><p>The message never led with the role. It led with the relationship and the ask was always "can we find 15 minutes to catch up" or "would you be willing to send my name to the recruiting team." Asking for a referral directly on the first message worked less well than just asking for a conversation.</p><p>After sending, the Stage Log was updated to 📬 Outreach Sent. From that point the pipeline was identical to the Applied path — the role entered the same waiting state and moved through the same stages.</p>`
+    },
+    "apply": {
+      title: "Apply on careers site",
+      body: `<p>Standard application with the tailored resume. Most applications were submitted directly through the company's careers portal. The tailored resume was the primary differentiator — a generic resume rarely made it through Staff-level screening in competitive domains.</p><p>Application notes, job IDs, and any specific submission requirements were captured in the company's notes subtab in the Google Doc for reference during later stages.</p>`
+    },
+    "applied-log": {
+      title: "✅ Applied — log check-in",
+      body: `<p>After applying, two things were logged: the Stage Log was updated to ✅ Applied with the date, and the Check-In Log got a new entry marking this as a check where an applicable role was found and an application was submitted.</p><p>The Stage Log was the longitudinal record of every role's pipeline history. Each stage change — Applied, Recruiter Screen, HM Screen, etc. — became a new entry with date, company, role title, and the assessment scores from the Roles tab. This made it possible to see the full history of any role at a glance, and to analyze patterns across the search.</p>`
+    },
+    "response": {
+      title: "Response received?",
+      body: `<p>After applying, most roles entered a waiting state. The search continued in parallel — no role got special waiting attention. The system was designed so that no single pipeline depended on any single outcome.</p><p>Three terminal states were possible without advancing: 🚪 Not Selected (explicit rejection), 📴 Role Not Available (role pulled or frozen), and ⏳ On Hold (paused for business reasons). On Hold roles looped back into the queue to be re-checked, since sometimes frozen roles reopened. Not Selected and Role Not Available were terminal.</p><p>The most important discipline here: don't let any single "no" slow down the rest of the loop. The system was designed to absorb rejections without requiring energy to process each one individually.</p>`
+    },
+    "recruiter-screen": {
+      title: "📞 Recruiter Screen",
+      body: `<p>The recruiter screen was typically 30 minutes. The goal was to pass through to the hiring manager — not to sell deeply, but to establish credibility, confirm compensation alignment, and make it easy for the recruiter to advocate internally.</p><p>Standard prep: confirm the comp floor clearly and early (no point advancing if compensation doesn't work), have a crisp 90-second narrative ready, know the company's current priorities at a high level. Interview prep for recruiter screens was lighter than for HM screens — mostly about positioning and comp clarity.</p><p>The company notes subtab was updated after every call: questions asked, things to research, tone and signals from the recruiter.</p>`
+    },
+    "hm-screen": {
+      title: "👍 Hiring Manager Screen",
+      body: `<p>The HM screen was where the real evaluation started. This was the first conversation with someone who understood the role deeply and had opinions about what success looked like. The goal was to demonstrate that you understood the domain, had done the relevant work, and could think at the right level.</p><p>Early in the search, one HM screen became the proof of concept for what this prep could look like done right. A credential gap was identified in advance, closed through genuine learning before the conversation, and the result was earned confidence rather than performed confidence. The role didn't produce an offer, but it produced the template for every HM screen that followed.</p><p>Key prep elements: research the HM's background, anticipate their likely concerns about your fit, select stories that speak directly to the role's core challenges, and sharpen the STRIRI framework for the specific angle this HM would care about.</p>`
+    },
+    "take-home": {
+      title: "📝 Take-Home Assignment",
+      body: `<p>Take-home assignments appeared at several points in the search, typically between the HM screen and the loop interview. They ranged from strategy documents and product teardowns to technical design exercises and case studies.</p><p>The company notes subtab held all take-home materials: the prompt, the submitted work, and notes on the approach. Claude was used for structure and thinking partnership on complex take-homes — not to write the answer, but to pressure-test the logic and sharpen the narrative before submitting.</p><p>The key discipline: take-homes are a signal about how you work, not just what you know. Clear structure, explicit tradeoffs, and a defensible recommendation mattered more than comprehensive coverage.</p>`
+    },
+    "loop-interview": {
+      title: "➰ Loop Interview",
+      body: `<p>Loop interviews typically meant 3–5 back-to-back conversations with different interviewers on the same day. Each interviewer usually had a specific focus: one might run behavioral questions, another a case or system design, another a cross-functional scenario.</p><p>The prep challenge for loops was breadth — having a full story library that could cover any angle — and depth — being able to go three levels deep on any story when pressed. The STRIRI framework was essential here: having the Setup, Tension, Read, Intervention, Resolution, and Insight pre-built for each story meant you could answer quickly and not lose the thread under pressure.</p><p>The debrief after a loop was critical: capturing what was asked by which interviewer, what stories were used, and where the answers felt thin. This directly improved prep for subsequent stages.</p>`
+    },
+    "panel": {
+      title: "👥 Panel Interview",
+      body: `<p>Panel interviews put multiple interviewers in the room simultaneously. The dynamic is different from a loop: you're managing multiple relationships at once, different people have different concerns, and the conversation can shift direction quickly based on follow-up questions from different panelists.</p><p>Prep for panels emphasized flexibility over scripting. Having the story library solid meant being able to redirect to the right story regardless of which panelist was asking. The goal was to make each panelist feel heard and answered, not to deliver a prepared speech to the room.</p>`
+    },
+    "final-round": {
+      title: "🔚 Final Round",
+      body: `<p>Final rounds typically involved executive-level conversations and cross-functional stakeholders. The questions shifted from "can you do the job" to "how will you show up as a leader here." Behavioral depth, strategic thinking, and cultural fit were the primary signals at this stage.</p><p>Final round prep was the most personalized of all the interview stages — heavily dependent on who specifically was in the room and what they cared about. Research on each interviewer, their background, and the company's current priorities at the executive level informed story selection and framing.</p>`
+    },
+    "offer-decision": {
+      title: "Offer received — evaluate with decision matrix",
+      body: `<p>Three offers arrived in close proximity, creating a decision that required a framework rather than a gut call. The decision matrix weighted criteria explicitly: overall role fit, compensation and stability, level and scope, misery risk, skills match, and culture signal.</p><p>The matrix forced the conversation away from "which one feels right" and toward "which one scores right, and where do the scores diverge from the gut." The gut still mattered — but it was a check on the scores, not the primary input.</p><p>The matrix also made the decision defensible to yourself later. When you accept an offer, you want to know you made it with clear eyes, not in the fog of a stressful search.</p>`
+    },
+    "offer": {
+      title: "💰 Offer",
+      body: `<p>Receiving an offer triggered two things: updating the Stage Log to 💰 Offer, and running the full decision matrix against the offer terms.</p><p>The comp floor was a specific cash + bonus number set at the start of the search. Pre-IPO equity was excluded from the floor calculation — too illiquid and too uncertain to count against the comp target. This rule prevented the classic mistake of accepting below-floor cash compensation in exchange for equity that might never vest meaningfully.</p><p>When multiple offers arrived simultaneously, the decision matrix did the work. Each offer scored differently across role shape, comp, risk, environment, and career trajectory. The matrix surfaced which offer was actually strongest on the dimensions that mattered, independent of which one felt most flattering in the moment.</p>`
+    },
+    "accept": {
+      title: "Accept?",
+      body: `<p>The accept decision was the final test of the system. Did the scores hold up? Did the gut align with the matrix? Were there any last concerns that hadn't been fully weighed?</p><p>The offer accepted had the strongest combined score: it cleared the comp floor with room, the role shape matched the core through-line of the search, the equity story was credible, and the hiring manager was someone worth working for. The decision matrix confirmed what the gut already knew.</p><p>Declining an offer looped back to Pick Next Company — the search continued until the right offer cleared every threshold simultaneously.</p>`
+    },
+    "accepted": {
+      title: "🏁 Accepted",
+      body: `<p>The Stage Log was updated to 🏁 Accepted. The search was done.</p><p>From layoff to accepted offer, approximately five months: 471 roles assessed, 176 applications submitted, 675 career page check-ins, three simultaneous offers, one decision matrix, one accepted offer.</p><p>The system worked not because it made the search easy, but because it made the search manageable. The complexity didn't go away. It got absorbed into infrastructure. By the end, showing up and doing the work was all that was left.</p>`
+    }
+  },
+  ip: {
+    "trigger": {
+      title: "Stage scheduled",
+      body: `<p>Interview prep was a separate loop triggered by a specific event: a stage was scheduled. Unlike the daily check-in loop, which ran on a schedule, prep ran on demand — whenever a recruiter screen, HM screen, loop interview, panel, or final round was confirmed.</p><p>The trigger meant prep was never done in the abstract. It was always anchored to a specific role, a specific stage, and a specific set of people on the other side of the conversation. That context shaped everything: which stories to select, what to research, how to frame the angle.</p>`
+    },
+    "load-context": {
+      title: "Load role context",
+      body: `<p>The first step was loading everything already known about the role into the working context. This meant opening the gut check table row in the Roles tab (which had the 16-column assessment already complete) and the company's notes subtab in the Google Doc (which had recruiter call notes, prior interview notes, and any take-home materials).</p><p>This is where the compound value of having Claude in the loop from the beginning paid off. The gut check table had already digested the JD. The company notes had the prior conversation history. Prep could start at 50% done rather than from scratch — the context didn't need to be rebuilt, just loaded.</p>`
+    },
+    "research": {
+      title: "Research with Claude",
+      body: `<p>For each scheduled stage, targeted research was done with Claude on: the company's current priorities and recent news, the specific team and what they were working on, and the interviewer's background — their career history, their public writing or talks, their likely focus areas based on their role.</p><p>Interviewer research wasn't about finding gotcha questions. It was about understanding what they cared about so stories could be framed in their language. An engineering-background HM needed technical depth surfaced more explicitly than a product-background HM. A compliance-focused interviewer needed governance stories front and center.</p><p>Research was captured in the company notes subtab and referenced throughout prep.</p>`
+    },
+    "credential-gap": {
+      title: "Credential gap?",
+      body: `<p>After loading context and doing initial research, the honest question: is there a domain where the interviewer's expectations might exceed what could be demonstrated from existing experience?</p><p>This was distinct from a skills gap. A skills gap means you can't do the job. A credential gap means you can do the job but haven't yet done it in this specific domain, and the interviewer might not know that. Closing a credential gap meant learning enough to have a real conversation — not faking expertise, but demonstrating genuine curiosity and enough understanding to engage credibly.</p><p>Most roles had no meaningful credential gap. A few had significant ones — typically newer technology domains where the underlying PM or TPM skills were fully transferable but the specific domain vocabulary and tools needed to be built. The gap was identified, closed through genuine learning, and the result was confidence that was earned rather than performed.</p>`
+    },
+    "domain-learning": {
+      title: "Domain learning",
+      body: `<p>When a credential gap was identified, Claude became a learning partner rather than just a prep tool. The goal was to close the gap enough to have a real conversation — not to pretend to be an expert, but to demonstrate genuine engagement with the domain.</p><p>For one early role that required AI domain knowledge, this meant: learning how LLMs worked at a conceptual level, understanding key AI infrastructure patterns and protocols, and actually building a small tool using the relevant technology. The hands-on work was key. Building something — even something small — produced understanding that reading about it couldn't. It also produced a concrete thing to point to in the interview: direct engagement with the domain, not secondhand familiarity.</p><p>Domain learning happened for several roles throughout the search. The pattern was always the same: identify the gap specifically, do real work to close it, go in with earned confidence. The depth varied by how central the domain was to the role — a nice-to-have gap warranted a few hours of reading; a core-credential gap warranted days of genuine work.</p>`
+    },
+    "question-bank": {
+      title: "Question bank",
+      body: `<p>The question bank was a structured list of common PM and TPM interview questions, each entry containing: the question text, the category (Execution, Strategy, Cross-functional, Leadership, Technical, etc.), the role type it applied to (PM, TPM, Both), a frequency/importance rating, and a mapped story mnemonic.</p><p>The mnemonic mapping was the key feature. Every question had a pre-assigned story from the story library. "Tell me about a time you had to influence without authority" mapped to a specific conflict resolution story. "Tell me about a system you built from scratch" mapped to a specific governance or platform story. The mapping meant you didn't have to think under pressure about which story to use — you'd already made that decision in prep.</p><p>The question bank was updated after every debrief. New questions that came up in real interviews were added. Story mappings that didn't land well were revised. Over five months and multiple full interview loops, the bank became highly calibrated to what actually got asked at Staff+ level.</p>`
+    },
+    "story-selection": {
+      title: "Story selection with Claude",
+      body: `<p>With the question bank loaded and the role context in hand, Claude helped select and sequence the stories that best matched the specific role, stage, and interviewer. Each story in the library had a short mnemonic — a one-word anchor that made it fast to retrieve under pressure without having to reconstruct the full narrative from scratch.</p><p>Each mnemonic anchored a full STRIRI story: Setup (dramatize the stakes viscerally), Tension (what made this hard), Read (name alternatives explicitly — show the decision space), Intervention (what was done), Resolution (what happened), Insight (what was learned that generalized).</p><p>The Read component was the most important and most often missed in standard STAR prep. Naming alternatives explicitly — "I considered doing X, but the risk was Y; I considered Z, but the cost was W; I chose this path because..." — demonstrated judgment, not just execution.</p><p>Story selection wasn't just about picking the most impressive story. It was about matching the story's core tension to the role's core challenge. A reliability story lands differently at a company rebuilding its incident response than it does at a company that's never had a major outage. Context shaped selection every time.</p>`
+    },
+    "talking-points": {
+      title: "Develop talking points",
+      body: `<p>After story selection, the stories were sharpened for the specific stage and interviewer. A recruiter screen needed a crisp 90-second version of the positioning narrative and clear comp alignment. An HM screen needed technical depth surfaced and the strategic framing emphasized. A loop interview needed the full story library primed and ready to deploy in any order.</p><p>Talking points were structured as short nested bullets — concept at the top level, 3–5 word fragments as sub-bullets. Not prose, not scripts. The goal was to internalize the structure so the words came naturally rather than recited. Claude's instructions for talking points: "concise talking points means short nested bullets, no prose, no complete sentences. Top-level bullet is the concept, sub-bullets are 3–5 word fragments."</p><p>The stage-specific angle mattered. The same story told to an HM at a developer platform company was framed differently than the same story told at a fintech company. Context — the company's current problems, the interviewer's background, the role's core challenge — determined which dimension of a story to lead with.</p>`
+    },
+    "mock-interview": {
+      title: "Mock interview with Claude",
+      body: `<p>The mock interview was the final prep step before the real thing. Claude played the interviewer, asking questions in the style and sequence likely for the specific stage, and gave feedback on gaps and delivery.</p><p>The format: Claude would ask a question, a full answer would be given as if in the real interview, and then Claude would give structured feedback — what landed, what was missing, where the answer lost the thread, whether the STRIRI structure was visible.</p><p>The most common feedback across many mock interviews: the Setup needed more visceral stakes ("dramatize it more"), the Read was often skipped or too thin ("name the alternatives explicitly"), and the Insight was often generic ("make it more specific to what you actually learned").</p><p>Multiple mock rounds per role for high-stakes stages. One round was usually enough for recruiter screens. HM screens and loops warranted two or three passes, especially if domain learning had happened that needed to be integrated into the stories.</p>`
+    },
+    "confident": {
+      title: "Confident enough?",
+      body: `<p>The question wasn't "do I feel ready" — that's a feeling that never fully arrives. The question was "is this confidence earned or performed?"</p><p>Earned confidence meant: the domain learning was real, the stories were internalized (not memorized), the company research was genuine, and the mock interview had surfaced and resolved the main gaps. Performed confidence meant: the talking points were polished but the understanding was thin, the stories sounded good but couldn't survive a follow-up question.</p><p>The distinction mattered in the room. Interviewers at Staff+ level, especially technical ones, asked follow-up questions designed to find the edge of your understanding. Performed confidence collapsed under those questions. Earned confidence held.</p><p>If not confident enough, the loop went back to story selection and talking points — not back to research, since by this point the context was already loaded. One more mock round, one more pass at sharpening the gaps, then forward.</p>`
+    },
+    "interview": {
+      title: "Interview",
+      body: `<p>The interview itself was the output of everything the system built. The goal in the room was to be present, not to execute a script. The prep had loaded the context, the stories were internalized, the company knowledge was genuine. All of that could run in the background while the actual conversation happened in the foreground.</p><p>The most consistent signal from strong interviews: they felt like conversations, not performances. The interviewer asked, a real answer was given, follow-up questions were welcomed rather than feared because the understanding was real. The STRIRI structure was invisible — it was the scaffolding, not the building.</p><p>The worst interviews happened when preparation was surface-level and the conversation hit something that hadn't been genuinely thought through. The system was designed to prevent that by making the preparation deep rather than broad.</p>`
+    },
+    "debrief": {
+      title: "Post-interview debrief",
+      body: `<p>Within an hour after each interview, a debrief was captured in the company notes subtab: what questions were asked, which stories were used, what the answers felt like, where the conversation went well, where it went thin.</p><p>This wasn't a feelings journal. It was a calibration tool. The debrief answered: which questions came up that weren't in the question bank? Which story mappings didn't quite fit and need to be revised? Where did a follow-up question reveal a gap in the answer?</p><p>The debrief after the first stage directly improved prep for the second stage. After the loop, it informed final round prep. Over a full interview process, the debrief created a progressively sharpened picture of exactly what this company, at this stage, with these people, cared about.</p>`
+    },
+    "update-qbank": {
+      title: "Update question bank",
+      body: `<p>After the debrief, the question bank was updated with any new questions that came up, and story mappings were revised if they hadn't landed as expected. This closed the loop between real interview experience and future prep.</p><p>Over five months and multiple full interview processes, the question bank became highly accurate about what actually got asked at Staff+ level in developer platform, TPM, and PM roles. It was no longer theoretical — it was calibrated against real conversations with real hiring managers.</p><p>The compound effect: later-stage prep was faster and more precise than early-stage prep because the bank had absorbed dozens of real interview data points. The system got smarter over time rather than staying static.</p>`
+    },
+    "advancing": {
+      title: "Advancing to next stage?",
+      body: `<p>After the debrief and question bank update, the simple question: did a next stage get scheduled? If yes, the full prep loop ran again — load context, research, check for new gaps, select stories, sharpen talking points, mock interview. Each iteration was faster because the context was already partially loaded from the prior stage.</p><p>If no next stage came — either an explicit rejection or silence — the outcome loop ran. The role moved to Not Selected or the pipeline closed. The search continued.</p>`
+    },
+    "outcome": {
+      title: "Outcome",
+      body: `<p>Two possible outcomes when the interview process concluded: 🚪 Not Selected, or 💰 Offer received. Both fed back into the main process flow — Not Selected was terminal for that role, Offer received triggered the decision matrix.</p><p>Not Selected outcomes were logged without drama. The system was designed to absorb them. At the volume of this search, a high rejection rate was mathematically inevitable — 471 assessed roles, 176 applications, three offers. Most paths ended here. The system's job was to make each path run efficiently and not let any individual rejection slow the overall loop.</p><p>Offer received routed back to the main process flow's 💰 Offer node, where the decision matrix ran and the accept/decline decision was made.</p>`
+    }
+  }
+};
+
+function showNode(diagram, nodeId) {
+  const content = nodeContent[diagram][nodeId];
+  if (!content) return;
+  document.getElementById('modal-title').textContent = content.title;
+  document.getElementById('modal-body').innerHTML = content.body;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-body').scrollTop = 0;
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+const navLinks = document.querySelectorAll('nav a');
+const sections = document.querySelectorAll('.section');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const id = entry.target.id;
+      const active = document.querySelector('nav a[href="#' + id + '"]');
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

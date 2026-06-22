@@ -150,6 +150,17 @@
     flex-wrap: wrap;
     padding: 1.5rem 0 0;
   }
+  .intro ul {
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.intro ul li {
+  margin-bottom: 0.35rem;
+}
   .stat {
     display: flex;
     flex-direction: column;
@@ -365,13 +376,12 @@
 
   <div class="intro">
     <p>In January 2026, after spending six years at Meta, I was laid off. That started a job search that lasted 5 months, ending with a job offer, and along the way, I ended up building a system to run the search itself.</p>
-    <p>My search started like many others': searching job boards. I started with regularly searching phrases like  “staff technical program manager,” “platform product manager,” and a handful of similar terms. What I quickly realized was that these job boards had some inherent issues.
+    <p>My search started like many others': searching job boards. I started with regularly searching phrases like  “staff technical program manager,” “platform product manager,” and a handful of similar terms. What I quickly realized was that these job boards had some inherent issues.</p>
     <ul>
       <li>Keywords returning roles that pattern-matched the words and brought back less relevant roles</li>
       <li>The best companies often don't post on job boards, and a significant portion of what did show up were sponsored, meaning relevant roles were mixed in with whoever paid to be listed</li>
       <li>I kept seeing the same roles over and over in these searches</li>
     </ul> 
-    </p>
     <p>And so I did what a PM/TPM does: I defined the problem to be solved and built a program to solve it.</p>
     <p>The core of the system was a Google Sheet anchored by a Companies tab. Instead of waiting for job boards to surface opportunities, I built a priority queue of a few hundred companies likely to have relevant roles and searched their careers pages on a prioritized rotating schedule. I was frequently able to apply within the first day or two of a posting going live, which matters at the staff level because hiring managers review the first wave of applications before their ATS queue becomes overwhelming. The Companies tab became the starting point for everything else: role evaluations at these companies with a structured scoring system, a canonical resume used to customize every job application, and a story library for interview prep tailored to the specific role. The result was that I got faster signal, better coverage, and a framework that got smarter the longer I ran it.</p>
     <p>The full system I built follows, including the tracker spreadsheet, the scoring framework, the resume approach, and how I used Claude throughout. I wrote this as a record of what I built. If you're in a job search, feel free to take what's useful.</p>
